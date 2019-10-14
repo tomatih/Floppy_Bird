@@ -1,19 +1,32 @@
 package com.to_matih.floppybird;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 public class game_view extends SurfaceView implements SurfaceHolder.Callback {
 
     private static game_thread thread;
 
+    // graphic constants
+    private final int ScreenWidth;
+    private final int ScreenHeight;
+    private int BackgroundColour = ResourcesCompat.getColor(getResources(), R.color.Sky, null);
+
+    // objects
+    private rectangle grass;
+
     public game_view(Context context) {
         super(context);
 
         getHolder().addCallback(this);
+
+        ScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        ScreenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
 
         thread = new game_thread(getHolder(), this);
         setFocusable(true);
@@ -24,6 +37,10 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
         // create an start the game thread
         thread.setRunning(true);
         thread.start();
+
+        // actor initialisation
+        grass = new rectangle(75, ScreenWidth, new Vector2(ScreenWidth / 2, ScreenHeight - (75 / 2)),
+                ResourcesCompat.getColor(getResources(), R.color.Pipe, null));
     }
 
     @Override
@@ -53,6 +70,9 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.drawColor(Color.rgb(0, 0, 0));
+        // clear screen
+        canvas.drawColor(BackgroundColour);
+        // draw static
+        grass.draw(canvas);
     }
 }
