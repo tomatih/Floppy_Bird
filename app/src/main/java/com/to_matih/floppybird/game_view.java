@@ -19,6 +19,7 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
 
     // objects
     private rectangle grass;
+    private circle bird;
 
     public game_view(Context context) {
         super(context);
@@ -41,6 +42,8 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
         // actor initialisation
         grass = new rectangle(75, ScreenWidth, new Vector2(ScreenWidth / 2, ScreenHeight - (75 / 2)),
                 ResourcesCompat.getColor(getResources(), R.color.Pipe, null));
+        bird = new circle(75, new Vector2(ScreenWidth / 2, ScreenHeight / 2),
+                ResourcesCompat.getColor(getResources(), R.color.Bird, null));
     }
 
     @Override
@@ -74,5 +77,7 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawColor(BackgroundColour);
         // draw static
         grass.draw(canvas);
+        //draw dynamic
+        bird.draw(canvas);
     }
 }
