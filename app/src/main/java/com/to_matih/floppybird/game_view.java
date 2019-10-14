@@ -3,6 +3,7 @@ package com.to_matih.floppybird;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -19,6 +20,9 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
 
     // physics constants
     private static final int Gravity = 100;
+    private static final int Bird_tap_velocity = 4 * Gravity;
+    // physics variables
+    private float bird_velocity = 0;
 
     // objects
     private rectangle grass;
@@ -73,7 +77,32 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
         // get delta in seconds
         float time_delta = (time_delta_raw * 1.0f) / 100000000;
 
+        // gravity effect
         bird.pos.y += Gravity * time_delta;
+        //velocity
+        if (bird_velocity > 0) {
+            bird.pos.y -= bird_velocity * time_delta;
+            bird_velocity -= Gravity * time_delta;
+        }
+
+        // grass collision
+        if (bird.pos.y > ScreenHeight - (bird.radius + grass.getHeight())) {
+            bird.pos.y = (int) (ScreenHeight - (bird.radius + grass.getHeight()));
+        }
+
+        // top of the screen bouncing
+        if (bird.pos.y < bird.radius) {
+            bird.pos.y = bird.radius;
+            bird_velocity = 0;
+        }
+
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        bird_velocity = Bird_tap_velocity;
+        return super.onTouchEvent(event);
     }
 
     @Override
