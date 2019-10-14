@@ -21,6 +21,8 @@ public class game_thread extends Thread {
 
     @Override
     public void run() {
+        long time_finished = System.nanoTime();
+        long time_started;
         while (running) {
             canvas = null;
 
@@ -29,8 +31,10 @@ public class game_thread extends Thread {
                 canvas = this.surfaceHolder.lockCanvas();
                 // draw and update
                 synchronized (surfaceHolder) {
-                    this.game_view.update();
+                    time_started = System.nanoTime();
+                    this.game_view.update(time_started - time_finished);
                     this.game_view.draw(canvas);
+                    time_finished = System.nanoTime();
                 }
             } catch (Exception ignored) {
             }

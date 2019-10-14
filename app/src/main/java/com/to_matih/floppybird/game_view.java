@@ -17,6 +17,9 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
     private final int ScreenHeight;
     private int BackgroundColour = ResourcesCompat.getColor(getResources(), R.color.Sky, null);
 
+    // physics constants
+    private static final int Gravity = 100;
+
     // objects
     private rectangle grass;
     private circle bird;
@@ -66,8 +69,11 @@ public class game_view extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    public void update() {
+    public void update(long time_delta_raw) {
+        // get delta in seconds
+        float time_delta = (time_delta_raw * 1.0f) / 100000000;
 
+        bird.pos.y += Gravity * time_delta;
     }
 
     @Override
