@@ -1,10 +1,10 @@
 package com.to_matih.floppybird;
 
 public class Vector2 {
-    public int x;
-    public int y;
+    public float x;
+    public float y;
 
-    Vector2(int x, int y) {
+    Vector2(float x, float y) {
         this.x = x;
         this.y = y;
     }
