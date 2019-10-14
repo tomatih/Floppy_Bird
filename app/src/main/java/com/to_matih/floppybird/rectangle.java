@@ -33,6 +33,14 @@ class rectangle {
         this.width_offset = width / 2;
     }
 
+    int getHeight() {
+        return height;
+    }
+
+    int getWidth() {
+        return width;
+    }
+
     void draw(Canvas canvas) {
         canvas.drawRect(pos.x - width_offset, pos.y - height_offset,
                 pos.x + width_offset, pos.y + height_offset, paint);
